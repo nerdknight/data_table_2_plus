@@ -1,13 +1,13 @@
 import 'package:data_table_2_plus/data_table_2_plus.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class PageNumber extends StatefulWidget {
   const PageNumber({
     super.key,
-    required PaginatorController controller,
-  }) : _controller = controller;
+    required this.controller,
+  });
 
-  final PaginatorController _controller;
+  final PaginatorController controller;
 
   @override
   PageNumberState createState() => PageNumberState();
@@ -21,12 +21,12 @@ class PageNumberState extends State<PageNumber> {
   @override
   void initState() {
     super.initState();
-    widget._controller.addListener(update);
+    widget.controller.addListener(update);
   }
 
   @override
   void dispose() {
-    widget._controller.removeListener(update);
+    widget.controller.removeListener(update);
     super.dispose();
   }
 
@@ -39,9 +39,9 @@ class PageNumberState extends State<PageNumber> {
     // though it's state is created 3 times upon first loading
     // of the Custom pager example
     // print(identityHashCode(this));
-    return Text(widget._controller.isAttached
-        ? 'Page: ${1 + ((widget._controller.currentRowIndex + 1) / widget._controller.rowsPerPage).floor()} of '
-            '${(widget._controller.rowCount / widget._controller.rowsPerPage).ceil()}'
+    return Text(widget.controller.isAttached
+        ? 'Page: ${1 + ((widget.controller.currentRowIndex + 1) / widget.controller.rowsPerPage).floor()} of '
+            '${(widget.controller.rowCount / widget.controller.rowsPerPage).ceil()}'
         : 'Page: x of y');
   }
 }
@@ -85,16 +85,24 @@ class CustomPagerState extends State<CustomPager> {
         ],
       ),
       child: Theme(
-          data: Theme.of(context)
-              .copyWith(iconTheme: const IconThemeData(color: Colors.white), textTheme: const TextTheme(titleMedium: TextStyle(color: Colors.white))),
+          data: Theme.of(context).copyWith(
+              iconTheme: const IconThemeData(color: Colors.white),
+              textTheme:
+                  const TextTheme(titleMedium: TextStyle(color: Colors.white))),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              IconButton(onPressed: () => widget.controller.goToFirstPage(), icon: const Icon(Icons.skip_previous)),
-              IconButton(onPressed: () => widget.controller.goToPreviousPage(), icon: const Icon(Icons.chevron_left_sharp)),
+              IconButton(
+                  onPressed: () => widget.controller.goToFirstPage(),
+                  icon: const Icon(Icons.skip_previous)),
+              IconButton(
+                  onPressed: () => widget.controller.goToPreviousPage(),
+                  icon: const Icon(Icons.chevron_left_sharp)),
               DropdownButton<int>(
                   onChanged: (v) => widget.controller.setRowsPerPage(v!),
-                  value: _availableSizes.contains(widget.controller.rowsPerPage) ? widget.controller.rowsPerPage : _availableSizes[0],
+                  value: _availableSizes.contains(widget.controller.rowsPerPage)
+                      ? widget.controller.rowsPerPage
+                      : _availableSizes[0],
                   dropdownColor: Colors.grey[800],
                   items: _availableSizes
                       .map((s) => DropdownMenuItem<int>(
@@ -102,8 +110,12 @@ class CustomPagerState extends State<CustomPager> {
                             child: Text(s.toString()),
                           ))
                       .toList()),
-              IconButton(onPressed: () => widget.controller.goToNextPage(), icon: const Icon(Icons.chevron_right_sharp)),
-              IconButton(onPressed: () => widget.controller.goToLastPage(), icon: const Icon(Icons.skip_next))
+              IconButton(
+                  onPressed: () => widget.controller.goToNextPage(),
+                  icon: const Icon(Icons.chevron_right_sharp)),
+              IconButton(
+                  onPressed: () => widget.controller.goToLastPage(),
+                  icon: const Icon(Icons.skip_next))
             ],
           )),
     );

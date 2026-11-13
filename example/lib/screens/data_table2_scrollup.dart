@@ -1,5 +1,5 @@
 import 'package:data_table_2_plus/data_table_2_plus.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../data_sources.dart';
 
@@ -66,7 +66,10 @@ class DataTable2ScrollupDemoState extends State<DataTable2ScrollupDemo> {
               // These makes scroll bars almost always visible. If horizontal scroll bar
               // is displayed then vertical migh be hidden as it will go out of viewport
               data: ThemeData(
-                  scrollbarTheme: ScrollbarThemeData(thumbVisibility: WidgetStateProperty.all(true), thumbColor: WidgetStateProperty.all<Color>(Colors.black))),
+                  scrollbarTheme: ScrollbarThemeData(
+                      thumbVisibility: WidgetStateProperty.all(true),
+                      thumbColor:
+                          WidgetStateProperty.all<Color>(Colors.black))),
               child: DataTable2(
                   scrollController: _controller,
                   horizontalScrollController: _horizontalController,
@@ -76,59 +79,75 @@ class DataTable2ScrollupDemoState extends State<DataTable2ScrollupDemo> {
                   minWidth: 600,
                   sortColumnIndex: _sortColumnIndex,
                   sortAscending: _sortAscending,
-                  onSelectAll: (val) => setState(() => _dessertsDataSource.selectAll(val)),
+                  onSelectAll: (val) =>
+                      setState(() => _dessertsDataSource.selectAll(val)),
                   columns: [
                     DataColumn2(
                       label: const Text('Desert'),
                       size: ColumnSize.S,
-                      onSort: (columnIndex, ascending) => _sort<String>((d) => d.name, columnIndex, ascending),
+                      onSort: (columnIndex, ascending) =>
+                          _sort<String>((d) => d.name, columnIndex, ascending),
                     ),
                     DataColumn2(
                       label: const Text('Calories'),
                       size: ColumnSize.S,
                       numeric: true,
-                      onSort: (columnIndex, ascending) => _sort<num>((d) => d.calories, columnIndex, ascending),
+                      onSort: (columnIndex, ascending) =>
+                          _sort<num>((d) => d.calories, columnIndex, ascending),
                     ),
                     DataColumn2(
                       label: const Text('Fat (gm)'),
                       size: ColumnSize.S,
                       numeric: true,
-                      onSort: (columnIndex, ascending) => _sort<num>((d) => d.fat, columnIndex, ascending),
+                      onSort: (columnIndex, ascending) =>
+                          _sort<num>((d) => d.fat, columnIndex, ascending),
                     ),
                     DataColumn2(
                       label: const Text('Carbs (gm)'),
                       size: ColumnSize.S,
                       numeric: true,
-                      onSort: (columnIndex, ascending) => _sort<num>((d) => d.carbs, columnIndex, ascending),
+                      onSort: (columnIndex, ascending) =>
+                          _sort<num>((d) => d.carbs, columnIndex, ascending),
                     ),
                     DataColumn2(
                       label: const Text('Protein (gm)'),
                       size: ColumnSize.S,
                       numeric: true,
-                      onSort: (columnIndex, ascending) => _sort<num>((d) => d.protein, columnIndex, ascending),
+                      onSort: (columnIndex, ascending) =>
+                          _sort<num>((d) => d.protein, columnIndex, ascending),
                     ),
                     DataColumn2(
                       label: const Text('Sodium (mg)'),
                       size: ColumnSize.S,
                       numeric: true,
-                      onSort: (columnIndex, ascending) => _sort<num>((d) => d.sodium, columnIndex, ascending),
+                      onSort: (columnIndex, ascending) =>
+                          _sort<num>((d) => d.sodium, columnIndex, ascending),
                     ),
                     DataColumn2(
                       label: const Text('Calcium (%)'),
                       size: ColumnSize.S,
                       numeric: true,
-                      onSort: (columnIndex, ascending) => _sort<num>((d) => d.calcium, columnIndex, ascending),
+                      onSort: (columnIndex, ascending) =>
+                          _sort<num>((d) => d.calcium, columnIndex, ascending),
                     ),
                     DataColumn2(
                       label: const Text('Iron (%)'),
                       size: ColumnSize.S,
                       numeric: true,
-                      onSort: (columnIndex, ascending) => _sort<num>((d) => d.iron, columnIndex, ascending),
+                      onSort: (columnIndex, ascending) =>
+                          _sort<num>((d) => d.iron, columnIndex, ascending),
                     ),
                   ],
-                  rows: List<DataRow>.generate(_dessertsDataSource.rowCount, (index) => _dessertsDataSource.getRow(index)))),
-          Positioned(bottom: 20, right: 0, child: _ScrollXYButton(_controller, '↑↑ go up ↑↑')),
-          Positioned(bottom: 60, right: 0, child: _ScrollXYButton(_horizontalController, '←← go left ←←'))
+                  rows: List<DataRow>.generate(_dessertsDataSource.rowCount,
+                      (index) => _dessertsDataSource.getRow(index)))),
+          Positioned(
+              bottom: 20,
+              right: 0,
+              child: _ScrollXYButton(_controller, '↑↑ go up ↑↑')),
+          Positioned(
+              bottom: 60,
+              right: 0,
+              child: _ScrollXYButton(_horizontalController, '←← go left ←←'))
         ]));
   }
 }
@@ -173,8 +192,12 @@ class _ScrollXYButtonState extends State<_ScrollXYButton> {
   Widget build(BuildContext context) {
     return _showScrollXY
         ? OutlinedButton(
-            onPressed: () => widget.controller.animateTo(0, duration: const Duration(milliseconds: 300), curve: Curves.easeIn),
-            style: ButtonStyle(backgroundColor: WidgetStateProperty.all(Colors.grey[800]), foregroundColor: WidgetStateProperty.all(Colors.white)),
+            onPressed: () => widget.controller.animateTo(0,
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeIn),
+            style: ButtonStyle(
+                backgroundColor: WidgetStateProperty.all(Colors.grey[800]),
+                foregroundColor: WidgetStateProperty.all(Colors.white)),
             child: Text(widget.title),
           )
         : const SizedBox();

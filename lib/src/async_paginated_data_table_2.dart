@@ -74,7 +74,10 @@ abstract class AsyncDataTableSource extends DataTableSource {
           selected: selected ?? row.selected,
           specificRowHeight: row.specificRowHeight,
           onSelectChanged: row.onSelectChanged,
+          onLongPress: row.onLongPress,
+          onHover: row.onHover,
           color: row.color,
+          mouseCursor: row.mouseCursor,
           cells: row.cells,
           onTap: row.onTap,
           onDoubleTap: row.onDoubleTap,
@@ -86,7 +89,10 @@ abstract class AsyncDataTableSource extends DataTableSource {
       key: row.key,
       selected: selected ?? row.selected,
       onSelectChanged: row.onSelectChanged,
+      onLongPress: row.onLongPress,
+      onHover: row.onHover,
       color: row.color,
+      mouseCursor: row.mouseCursor,
       cells: row.cells,
     );
   }

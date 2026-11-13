@@ -1,5 +1,5 @@
 import 'package:data_table_2_plus/data_table_2_plus.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../data_sources.dart';
 import '../nav_helper.dart';
@@ -30,7 +30,11 @@ class ResizableDataTable2DemoState extends State<ResizableDataTable2Demo> {
     if (!_initialized) {
       final currentRouteOption = getCurrentRouteOption(context);
       _dessertsDataSource = DessertDataSource(
-          context, false, currentRouteOption == rowTaps, currentRouteOption == rowHeightOverrides, currentRouteOption == showBordersWithZebraStripes);
+          context,
+          false,
+          currentRouteOption == rowTaps,
+          currentRouteOption == rowHeightOverrides,
+          currentRouteOption == showBordersWithZebraStripes);
       // Default sorting sample. Set __sortColumnIndex to 0 and uncoment the lines below
       // if (_sortColumnIndex == 0) {
       //   _sort<String>((d) => d.name, _sortColumnIndex!, _sortAscending);
@@ -93,12 +97,14 @@ class ResizableDataTable2DemoState extends State<ResizableDataTable2Demo> {
             right: BorderSide(color: Colors.grey[300]!),
             verticalInside: BorderSide(color: Colors.grey[300]!),
             horizontalInside: const BorderSide(color: Colors.grey, width: 1)),
-        dividerThickness: 1, // this one will be ignored if [border] is set above
+        dividerThickness:
+            1, // this one will be ignored if [border] is set above
         bottomMargin: 10,
         minWidth: 900,
         sortColumnIndex: _sortColumnIndex,
         sortAscending: _sortAscending,
-        onSelectAll: (val) => setState(() => _dessertsDataSource.selectAll(val)),
+        onSelectAll: (val) =>
+            setState(() => _dessertsDataSource.selectAll(val)),
         columns: [
           DataColumn2(
             label: const Text('Desert'),
@@ -106,62 +112,77 @@ class ResizableDataTable2DemoState extends State<ResizableDataTable2Demo> {
             isResizable: true,
             minWidth: 200,
             // example of fixed 1st row
-            fixedWidth: getCurrentRouteOption(context) == fixedColumnWidth ? 200 : null,
-            onSort: (columnIndex, ascending) => _sort<String>((d) => d.name, columnIndex, ascending),
+            fixedWidth:
+                getCurrentRouteOption(context) == fixedColumnWidth ? 200 : null,
+            onSort: (columnIndex, ascending) =>
+                _sort<String>((d) => d.name, columnIndex, ascending),
           ),
           DataColumn2(
             label: const Text('Calories'),
             isResizable: true,
             size: ColumnSize.S,
             numeric: true,
-            onSort: (columnIndex, ascending) => _sort<num>((d) => d.calories, columnIndex, ascending),
+            onSort: (columnIndex, ascending) =>
+                _sort<num>((d) => d.calories, columnIndex, ascending),
           ),
           DataColumn2(
             label: const Text('Fat (gm)'),
             isResizable: true,
             size: ColumnSize.S,
             numeric: true,
-            onSort: (columnIndex, ascending) => _sort<num>((d) => d.fat, columnIndex, ascending),
+            onSort: (columnIndex, ascending) =>
+                _sort<num>((d) => d.fat, columnIndex, ascending),
           ),
           DataColumn2(
             label: const Text('Carbs (gm)'),
             isResizable: true,
             size: ColumnSize.S,
             numeric: true,
-            onSort: (columnIndex, ascending) => _sort<num>((d) => d.carbs, columnIndex, ascending),
+            onSort: (columnIndex, ascending) =>
+                _sort<num>((d) => d.carbs, columnIndex, ascending),
           ),
           DataColumn2(
             label: const Text('Protein (gm)'),
             isResizable: true,
             size: ColumnSize.S,
             numeric: true,
-            onSort: (columnIndex, ascending) => _sort<num>((d) => d.protein, columnIndex, ascending),
+            onSort: (columnIndex, ascending) =>
+                _sort<num>((d) => d.protein, columnIndex, ascending),
           ),
           DataColumn2(
             label: const Text('Sodium (mg)'),
             isResizable: true,
             size: ColumnSize.S,
             numeric: true,
-            onSort: (columnIndex, ascending) => _sort<num>((d) => d.sodium, columnIndex, ascending),
+            onSort: (columnIndex, ascending) =>
+                _sort<num>((d) => d.sodium, columnIndex, ascending),
           ),
           DataColumn2(
             label: const Text('Calcium (%)'),
             isResizable: true,
             size: ColumnSize.S,
             numeric: true,
-            onSort: (columnIndex, ascending) => _sort<num>((d) => d.calcium, columnIndex, ascending),
+            onSort: (columnIndex, ascending) =>
+                _sort<num>((d) => d.calcium, columnIndex, ascending),
           ),
           DataColumn2(
             label: const Text('Iron (%)'),
             isResizable: true,
             size: ColumnSize.S,
             numeric: true,
-            onSort: (columnIndex, ascending) => _sort<num>((d) => d.iron, columnIndex, ascending),
+            onSort: (columnIndex, ascending) =>
+                _sort<num>((d) => d.iron, columnIndex, ascending),
           ),
         ],
-        empty: Center(child: Container(padding: const EdgeInsets.all(20), color: Colors.grey[200], child: const Text('No data'))),
-        rows:
-            getCurrentRouteOption(context) == noData ? [] : List<DataRow>.generate(_dessertsDataSource.rowCount, (index) => _dessertsDataSource.getRow(index)),
+        empty: Center(
+            child: Container(
+                padding: const EdgeInsets.all(20),
+                color: Colors.grey[200],
+                child: const Text('No data'))),
+        rows: getCurrentRouteOption(context) == noData
+            ? []
+            : List<DataRow>.generate(_dessertsDataSource.rowCount,
+                (index) => _dessertsDataSource.getRow(index)),
         columnResizingParameters: resizeParam,
       ),
     );

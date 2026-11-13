@@ -1,5 +1,5 @@
 import 'package:data_table_2_plus/data_table_2_plus.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../data_sources.dart';
 import '../nav_helper.dart';
@@ -32,7 +32,11 @@ class DataTable2DemoState extends State<DataTable2Demo> {
     if (!_initialized) {
       final currentRouteOption = getCurrentRouteOption(context);
       _dessertsDataSource = DessertDataSource(
-          context, false, currentRouteOption == rowTaps, currentRouteOption == rowHeightOverrides, currentRouteOption == showBordersWithZebraStripes);
+          context,
+          false,
+          currentRouteOption == rowTaps,
+          currentRouteOption == rowHeightOverrides,
+          currentRouteOption == showBordersWithZebraStripes);
       _initialized = true;
       _dessertsDataSource.addListener(() {
         setState(() {});
@@ -75,9 +79,11 @@ class DataTable2DemoState extends State<DataTable2Demo> {
               )),
           child: DataTable2(
             // Forcing all scrollbars to be visible, alternatively themes can be used (see above)
-            headingRowColor: WidgetStateColor.resolveWith((states) => Colors.grey[850]!),
+            headingRowColor:
+                WidgetStateColor.resolveWith((states) => Colors.grey[850]!),
             headingTextStyle: const TextStyle(color: Colors.white),
-            headingCheckboxTheme: const CheckboxThemeData(side: BorderSide(color: Colors.white, width: 2.0)),
+            headingCheckboxTheme: const CheckboxThemeData(
+                side: BorderSide(color: Colors.white, width: 2.0)),
             //checkboxAlignment: Alignment.topLeft,
             isHorizontalScrollBarVisible: true,
             isVerticalScrollBarVisible: true,
@@ -87,8 +93,16 @@ class DataTable2DemoState extends State<DataTable2Demo> {
                 ? (ascending, sorted) => sorted || alwaysShowArrows
                     ? Stack(
                         children: [
-                          Padding(padding: const EdgeInsets.only(right: 0), child: _SortIcon(ascending: true, active: sorted && ascending)),
-                          Padding(padding: const EdgeInsets.only(left: 10), child: _SortIcon(ascending: false, active: sorted && !ascending)),
+                          Padding(
+                              padding: const EdgeInsets.only(right: 0),
+                              child: _SortIcon(
+                                  ascending: true,
+                                  active: sorted && ascending)),
+                          Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: _SortIcon(
+                                  ascending: false,
+                                  active: sorted && !ascending)),
                         ],
                       )
                     : null
@@ -100,72 +114,93 @@ class DataTable2DemoState extends State<DataTable2Demo> {
                     left: BorderSide(color: Colors.grey[300]!),
                     right: BorderSide(color: Colors.grey[300]!),
                     verticalInside: BorderSide(color: Colors.grey[300]!),
-                    horizontalInside: const BorderSide(color: Colors.grey, width: 1))
-                : (getCurrentRouteOption(context) == showBordersWithZebraStripes ? TableBorder.all() : null),
-            dividerThickness: 1, // this one will be ignored if [border] is set above
+                    horizontalInside:
+                        const BorderSide(color: Colors.grey, width: 1))
+                : (getCurrentRouteOption(context) == showBordersWithZebraStripes
+                    ? TableBorder.all()
+                    : null),
+            dividerThickness:
+                1, // this one will be ignored if [border] is set above
             bottomMargin: 10,
             minWidth: 900,
             sortColumnIndex: _sortColumnIndex,
             sortAscending: _sortAscending,
             sortArrowIcon: Icons.keyboard_arrow_up, // custom arrow
-            sortArrowAnimationDuration: const Duration(milliseconds: 500), // custom animation duration
-            onSelectAll: (val) => setState(() => _dessertsDataSource.selectAll(val)),
+            sortArrowAnimationDuration:
+                const Duration(milliseconds: 500), // custom animation duration
+            onSelectAll: (val) =>
+                setState(() => _dessertsDataSource.selectAll(val)),
             columns: [
               DataColumn2(
                 label: const Text('Desert'),
                 size: ColumnSize.S,
                 // example of fixed 1st row
-                fixedWidth: getCurrentRouteOption(context) == fixedColumnWidth ? 200 : null,
-                onSort: (columnIndex, ascending) => _sort<String>((d) => d.name, columnIndex, ascending),
+                fixedWidth: getCurrentRouteOption(context) == fixedColumnWidth
+                    ? 200
+                    : null,
+                onSort: (columnIndex, ascending) =>
+                    _sort<String>((d) => d.name, columnIndex, ascending),
                 // headingRowAlignment: MainAxisAlignment.end,
               ),
               DataColumn2(
                 label: const Text('Calories'),
                 size: ColumnSize.S,
                 numeric: true,
-                onSort: (columnIndex, ascending) => _sort<num>((d) => d.calories, columnIndex, ascending),
+                onSort: (columnIndex, ascending) =>
+                    _sort<num>((d) => d.calories, columnIndex, ascending),
               ),
               DataColumn2(
                 label: const Text('Fat (gm)'),
                 size: ColumnSize.S,
                 numeric: true,
-                onSort: (columnIndex, ascending) => _sort<num>((d) => d.fat, columnIndex, ascending),
+                onSort: (columnIndex, ascending) =>
+                    _sort<num>((d) => d.fat, columnIndex, ascending),
               ),
               DataColumn2(
                 label: const Text('Carbs (gm)'),
                 size: ColumnSize.S,
                 numeric: true,
-                onSort: (columnIndex, ascending) => _sort<num>((d) => d.carbs, columnIndex, ascending),
+                onSort: (columnIndex, ascending) =>
+                    _sort<num>((d) => d.carbs, columnIndex, ascending),
               ),
               DataColumn2(
                 label: const Text('Protein (gm)'),
                 size: ColumnSize.S,
                 numeric: true,
-                onSort: (columnIndex, ascending) => _sort<num>((d) => d.protein, columnIndex, ascending),
+                onSort: (columnIndex, ascending) =>
+                    _sort<num>((d) => d.protein, columnIndex, ascending),
               ),
               DataColumn2(
                 label: const Text('Sodium (mg)'),
                 size: ColumnSize.S,
                 numeric: true,
-                onSort: (columnIndex, ascending) => _sort<num>((d) => d.sodium, columnIndex, ascending),
+                onSort: (columnIndex, ascending) =>
+                    _sort<num>((d) => d.sodium, columnIndex, ascending),
               ),
               DataColumn2(
                 label: const Text('Calcium (%)'),
                 size: ColumnSize.S,
                 numeric: true,
-                onSort: (columnIndex, ascending) => _sort<num>((d) => d.calcium, columnIndex, ascending),
+                onSort: (columnIndex, ascending) =>
+                    _sort<num>((d) => d.calcium, columnIndex, ascending),
               ),
               DataColumn2(
                 label: const Text('Iron (%)'),
                 size: ColumnSize.S,
                 numeric: true,
-                onSort: (columnIndex, ascending) => _sort<num>((d) => d.iron, columnIndex, ascending),
+                onSort: (columnIndex, ascending) =>
+                    _sort<num>((d) => d.iron, columnIndex, ascending),
               ),
             ],
-            empty: Center(child: Container(padding: const EdgeInsets.all(20), color: Colors.grey[200], child: const Text('No data'))),
+            empty: Center(
+                child: Container(
+                    padding: const EdgeInsets.all(20),
+                    color: Colors.grey[200],
+                    child: const Text('No data'))),
             rows: getCurrentRouteOption(context) == noData
                 ? []
-                : List<DataRow>.generate(_dessertsDataSource.rowCount, (index) => _dessertsDataSource.getRow(index)),
+                : List<DataRow>.generate(_dessertsDataSource.rowCount,
+                    (index) => _dessertsDataSource.getRow(index)),
           )),
     );
   }

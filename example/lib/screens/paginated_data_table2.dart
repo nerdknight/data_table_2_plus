@@ -2,7 +2,7 @@
 
 import 'package:data_table_2_plus/data_table_2_plus.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../custom_pager.dart';
 import '../data_sources.dart';
@@ -34,7 +34,10 @@ class PaginatedDataTable2DemoState extends State<PaginatedDataTable2Demo> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (!_initialized) {
-      _dessertsDataSource = DessertDataSource(context, getCurrentRouteOption(context) == defaultSorting);
+      _dessertsDataSource = DessertDataSource(
+        context,
+        getCurrentRouteOption(context) == defaultSorting,
+      );
 
       _controller = PaginatorController();
 
@@ -68,114 +71,154 @@ class PaginatedDataTable2DemoState extends State<PaginatedDataTable2Demo> {
       DataColumn2(
         label: const Text('Desert'),
         isResizable: getCurrentRouteOption(context) == resizableCols,
-        onSort: (columnIndex, ascending) => sort<String>((d) => d.name, columnIndex, ascending),
+        onSort: (columnIndex, ascending) =>
+            sort<String>((d) => d.name, columnIndex, ascending),
       ),
       DataColumn2(
         label: const Text('Calories'),
         isResizable: getCurrentRouteOption(context) == resizableCols,
         numeric: true,
-        onSort: (columnIndex, ascending) => sort<num>((d) => d.calories, columnIndex, ascending),
+        onSort: (columnIndex, ascending) =>
+            sort<num>((d) => d.calories, columnIndex, ascending),
       ),
       DataColumn2(
         label: const Text('Fat (gm)'),
         isResizable: getCurrentRouteOption(context) == resizableCols,
         numeric: true,
-        onSort: (columnIndex, ascending) => sort<num>((d) => d.fat, columnIndex, ascending),
+        onSort: (columnIndex, ascending) =>
+            sort<num>((d) => d.fat, columnIndex, ascending),
       ),
       DataColumn2(
         label: const Text('Carbs (gm)'),
         isResizable: getCurrentRouteOption(context) == resizableCols,
         numeric: true,
-        onSort: (columnIndex, ascending) => sort<num>((d) => d.carbs, columnIndex, ascending),
+        onSort: (columnIndex, ascending) =>
+            sort<num>((d) => d.carbs, columnIndex, ascending),
       ),
       DataColumn2(
         label: const Text('Protein (gm)'),
         isResizable: getCurrentRouteOption(context) == resizableCols,
         numeric: true,
-        onSort: (columnIndex, ascending) => sort<num>((d) => d.protein, columnIndex, ascending),
+        onSort: (columnIndex, ascending) =>
+            sort<num>((d) => d.protein, columnIndex, ascending),
       ),
       DataColumn2(
         label: const Text('Sodium (mg)'),
         isResizable: getCurrentRouteOption(context) == resizableCols,
         numeric: true,
-        onSort: (columnIndex, ascending) => sort<num>((d) => d.sodium, columnIndex, ascending),
+        onSort: (columnIndex, ascending) =>
+            sort<num>((d) => d.sodium, columnIndex, ascending),
       ),
       DataColumn2(
         label: const Text('Calcium (%)'),
         isResizable: getCurrentRouteOption(context) == resizableCols,
         numeric: true,
-        onSort: (columnIndex, ascending) => sort<num>((d) => d.calcium, columnIndex, ascending),
+        onSort: (columnIndex, ascending) =>
+            sort<num>((d) => d.calcium, columnIndex, ascending),
       ),
       DataColumn2(
         label: const Text('Iron (%)'),
         isResizable: getCurrentRouteOption(context) == resizableCols,
         numeric: true,
-        onSort: (columnIndex, ascending) => sort<num>((d) => d.iron, columnIndex, ascending),
+        onSort: (columnIndex, ascending) =>
+            sort<num>((d) => d.iron, columnIndex, ascending),
       ),
     ];
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(alignment: Alignment.bottomCenter, children: [
-      PaginatedDataTable2(
-        // 100 Won't be shown since it is smaller than total records
-        availableRowsPerPage: const [2, 5, 10, 30, 100],
-        horizontalMargin: 20,
-        checkboxHorizontalMargin: 12,
-        columnSpacing: 0,
-        wrapInCard: false,
-        renderEmptyRowsInTheEnd: false,
-        headingRowColor: WidgetStateColor.resolveWith((states) => Colors.grey[200]!),
-        header: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          const Text('PaginatedDataTable2'),
-          if (kDebugMode && getCurrentRouteOption(context) == custPager)
-            Row(children: [
-              OutlinedButton(onPressed: () => _controller!.goToPageWithRow(25), child: const Text('Go to row 25')),
-              OutlinedButton(onPressed: () => _controller!.goToRow(5), child: const Text('Go to row 5'))
-            ]),
-          if (getCurrentRouteOption(context) == custPager && _controller != null) PageNumber(controller: _controller!)
-        ]),
-        rowsPerPage: _rowsPerPage,
-        autoRowsToHeight: getCurrentRouteOption(context) == autoRows,
-        minWidth: 800,
-        fit: FlexFit.tight,
-        border: TableBorder(
+    return Stack(
+      alignment: Alignment.bottomCenter,
+      children: [
+        PaginatedDataTable2(
+          // 100 Won't be shown since it is smaller than total records
+          availableRowsPerPage: const [2, 5, 10, 30, 100],
+          horizontalMargin: 20,
+          checkboxHorizontalMargin: 12,
+          columnSpacing: 0,
+          wrapInCard: false,
+          renderEmptyRowsInTheEnd: false,
+          headingRowColor: WidgetStateColor.resolveWith(
+            (states) => Colors.grey[200]!,
+          ),
+          header: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text('PaginatedDataTable2'),
+              if (kDebugMode && getCurrentRouteOption(context) == custPager)
+                Row(
+                  children: [
+                    OutlinedButton(
+                      onPressed: () => _controller!.goToPageWithRow(25),
+                      child: const Text('Go to row 25'),
+                    ),
+                    OutlinedButton(
+                      onPressed: () => _controller!.goToRow(5),
+                      child: const Text('Go to row 5'),
+                    ),
+                  ],
+                ),
+              if (getCurrentRouteOption(context) == custPager &&
+                  _controller != null)
+                PageNumber(controller: _controller!),
+            ],
+          ),
+          rowsPerPage: _rowsPerPage,
+          autoRowsToHeight: getCurrentRouteOption(context) == autoRows,
+          minWidth: 800,
+          fit: FlexFit.tight,
+          border: TableBorder(
             top: const BorderSide(color: Colors.black),
             bottom: BorderSide(color: Colors.grey[300]!),
             left: BorderSide(color: Colors.grey[300]!),
             right: BorderSide(color: Colors.grey[300]!),
             verticalInside: BorderSide(color: Colors.grey[300]!),
-            horizontalInside: const BorderSide(color: Colors.grey, width: 1)),
-        onRowsPerPageChanged: (value) {
-          // No need to wrap into setState, it will be called inside the widget
-          // and trigger rebuild
-          //setState(() {
-          _rowsPerPage = value!;
-          print(_rowsPerPage);
-          //});
-        },
-        initialFirstRowIndex: 0,
-        onPageChanged: (rowIndex) {
-          print(rowIndex / _rowsPerPage);
-        },
-        sortColumnIndex: _sortColumnIndex,
-        sortAscending: _sortAscending,
-        sortArrowIcon: Icons.keyboard_arrow_up, // custom arrow
-        sortArrowAnimationDuration: const Duration(milliseconds: 0), // custom animation duration
-        onSelectAll: _dessertsDataSource.selectAll,
-        controller: getCurrentRouteOption(context) == custPager ? _controller : null,
-        hidePaginator: getCurrentRouteOption(context) == custPager,
-        columns: _columns,
-        empty: Center(child: Container(padding: const EdgeInsets.all(20), color: Colors.grey[200], child: const Text('No data'))),
-        source: getCurrentRouteOption(context) == noData ? DessertDataSource.empty(context) : _dessertsDataSource,
-        columnResizingParameters: ColumnResizingParameters(
-          desktopMode: true,
-          realTime: true,
-          widgetColor: Theme.of(context).primaryColor,
+            horizontalInside: const BorderSide(color: Colors.grey, width: 1),
+          ),
+          onRowsPerPageChanged: (value) {
+            // No need to wrap into setState, it will be called inside the widget
+            // and trigger rebuild
+            //setState(() {
+            _rowsPerPage = value!;
+            print(_rowsPerPage);
+            //});
+          },
+          initialFirstRowIndex: 0,
+          onPageChanged: (rowIndex) {
+            print(rowIndex / _rowsPerPage);
+          },
+          sortColumnIndex: _sortColumnIndex,
+          sortAscending: _sortAscending,
+          sortArrowIcon: Icons.keyboard_arrow_up, // custom arrow
+          sortArrowAnimationDuration: const Duration(
+            milliseconds: 0,
+          ), // custom animation duration
+          onSelectAll: _dessertsDataSource.selectAll,
+          controller: getCurrentRouteOption(context) == custPager
+              ? _controller
+              : null,
+          hidePaginator: getCurrentRouteOption(context) == custPager,
+          columns: _columns,
+          empty: Center(
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              color: Colors.grey[200],
+              child: const Text('No data'),
+            ),
+          ),
+          source: getCurrentRouteOption(context) == noData
+              ? DessertDataSource.empty(context)
+              : _dessertsDataSource,
+          columnResizingParameters: ColumnResizingParameters(
+            desktopMode: true,
+            realTime: true,
+            widgetColor: Theme.of(context).primaryColor,
+          ),
         ),
-      ),
-      if (getCurrentRouteOption(context) == custPager) Positioned(bottom: 16, child: CustomPager(_controller!))
-    ]);
+        if (getCurrentRouteOption(context) == custPager)
+          Positioned(bottom: 16, child: CustomPager(_controller!)),
+      ],
+    );
   }
 }

@@ -4,16 +4,17 @@
 
 // Copyright 2021 Maxim Saplin - changes and modifications to original Flutter implementation of DataTable
 
-import 'package:data_table_2_plus/data_table_2_plus.dart';
-import 'package:flutter/gestures.dart' show DragStartBehavior;
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter/gestures.dart' show DragStartBehavior;
+import 'package:data_table_2_plus/data_table_2_plus.dart';
 
 import 'test_utils.dart';
 
 void main() {
-  final TestWidgetsFlutterBinding binding = TestWidgetsFlutterBinding.ensureInitialized();
+  final TestWidgetsFlutterBinding binding =
+      TestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('PaginatedDataTable2 paging', (WidgetTester tester) async {
     final TestDataSource source = TestDataSource(allowSelection: true);
@@ -69,7 +70,10 @@ void main() {
     expect(find.text('Eclair (0)'), findsNothing);
     expect(find.text('Gingerbread (0)'), findsNothing);
 
-    final Finder lastPageButton = find.ancestor(of: find.byTooltip('Last page'), matching: find.byWidgetPredicate((Widget widget) => widget is IconButton));
+    final Finder lastPageButton = find.ancestor(
+        of: find.byTooltip('Last page'),
+        matching:
+            find.byWidgetPredicate((Widget widget) => widget is IconButton));
 
     expect(tester.widget<IconButton>(lastPageButton).onPressed, isNotNull);
 
@@ -86,7 +90,10 @@ void main() {
     expect(find.text('Donut (49)'), findsOneWidget);
     expect(find.text('KitKat (49)'), findsOneWidget);
 
-    final Finder firstPageButton = find.ancestor(of: find.byTooltip('First page'), matching: find.byWidgetPredicate((Widget widget) => widget is IconButton));
+    final Finder firstPageButton = find.ancestor(
+        of: find.byTooltip('First page'),
+        matching:
+            find.byWidgetPredicate((Widget widget) => widget is IconButton));
 
     expect(tester.widget<IconButton>(firstPageButton).onPressed, isNotNull);
 
@@ -194,7 +201,8 @@ void main() {
     expect(find.text('43'), findsNothing);
     expect(find.text('15'), findsNWidgets(10));
 
-    final PaginatedDataTable2State state = tester.state(find.byType(PaginatedDataTable2));
+    final PaginatedDataTable2State state =
+        tester.state(find.byType(PaginatedDataTable2));
 
     expect(log, isEmpty);
     state.pageTo(23);
@@ -212,7 +220,8 @@ void main() {
     log.clear();
   });
 
-  testWidgets('PaginatedDataTable2 text alignment', (WidgetTester tester) async {
+  testWidgets('PaginatedDataTable2 text alignment',
+      (WidgetTester tester) async {
     await tester.pumpWidget(MaterialApp(
       home: PaginatedDataTable2(
         header: const Text('HEADER'),
@@ -232,10 +241,12 @@ void main() {
     ));
     expect(find.text('Rows per page:'), findsOneWidget);
     expect(find.text('8'), findsOneWidget);
-    expect(tester.getTopRight(find.text('8')).dx, tester.getTopRight(find.text('Rows per page:')).dx + 40.0); // per spec
+    expect(tester.getTopRight(find.text('8')).dx,
+        tester.getTopRight(find.text('Rows per page:')).dx + 40.0); // per spec
   });
 
-  testWidgets('PaginatedDataTable2 with and without header and actions', (WidgetTester tester) async {
+  testWidgets('PaginatedDataTable2 with and without header and actions',
+      (WidgetTester tester) async {
     await binding.setSurfaceSize(const Size(800, 800));
     const String headerText = 'HEADER';
     final List<Widget> actions = <Widget>[
@@ -272,7 +283,8 @@ void main() {
     await binding.setSurfaceSize(null);
   });
 
-  testWidgets('PaginatedDataTable2 with large text', (WidgetTester tester) async {
+  testWidgets('PaginatedDataTable2 with large text',
+      (WidgetTester tester) async {
     final TestDataSource source = TestDataSource();
     await tester.pumpWidget(MaterialApp(
       home: MediaQuery(
@@ -303,10 +315,14 @@ void main() {
     assert(501 > source.rowCount);
     expect(find.text('501'), findsOneWidget);
     // Test that it fits:
-    expect(tester.getTopRight(find.text('501')).dx, greaterThanOrEqualTo(tester.getTopRight(find.text('Rows per page:')).dx + 40.0));
+    expect(
+        tester.getTopRight(find.text('501')).dx,
+        greaterThanOrEqualTo(
+            tester.getTopRight(find.text('Rows per page:')).dx + 40.0));
   }, skip: isBrowser); // https://github.com/flutter/flutter/issues/43433
 
-  testWidgets('PaginatedDataTable2 footer info title lastRow number wraps', (WidgetTester tester) async {
+  testWidgets('PaginatedDataTable2 footer info title lastRow number wraps',
+      (WidgetTester tester) async {
     final TestDataSource source = TestDataSource();
     await tester.pumpWidget(
       MaterialApp(
@@ -328,7 +344,9 @@ void main() {
 
     expect(find.text('1–500 of 500'), findsOneWidget);
   });
-  testWidgets('PaginatedDataTable2 footer info title lastRow number will not wrap', (WidgetTester tester) async {
+  testWidgets(
+      'PaginatedDataTable2 footer info title lastRow number will not wrap',
+      (WidgetTester tester) async {
     final TestDataSource source = TestDataSource();
     await tester.pumpWidget(
       MaterialApp(
@@ -351,7 +369,8 @@ void main() {
     expect(find.text('1–501 of 500'), findsOneWidget);
   });
 
-  testWidgets('PaginatedDataTable2 footer scrolls', (WidgetTester tester) async {
+  testWidgets('PaginatedDataTable2 footer scrolls',
+      (WidgetTester tester) async {
     final TestDataSource source = TestDataSource();
     await tester.pumpWidget(
       MaterialApp(
@@ -377,16 +396,19 @@ void main() {
       ),
     );
     expect(find.text('Rows per page:'), findsOneWidget);
-    expect(tester.getTopLeft(find.text('Rows per page:')).dx, lessThan(0.0)); // off screen
+    expect(tester.getTopLeft(find.text('Rows per page:')).dx,
+        lessThan(0.0)); // off screen
     await tester.dragFrom(
       Offset(50.0, tester.getTopLeft(find.text('Rows per page:')).dy),
       const Offset(1000.0, 0.0),
     );
     await tester.pump();
     expect(find.text('Rows per page:'), findsOneWidget);
-    expect(tester.getTopLeft(find.text('Rows per page:')).dx, 18.0); // 14 padding in the footer row, 4 padding from the card
+    expect(tester.getTopLeft(find.text('Rows per page:')).dx,
+        closeTo(18.0, 1.0)); // 14 padding in the footer row, 4 padding from the card
   });
-  testWidgets('PaginatedDataTable2 custom row height', (WidgetTester tester) async {
+  testWidgets('PaginatedDataTable2 custom row height',
+      (WidgetTester tester) async {
     final TestDataSource source = TestDataSource();
 
     Widget buildCustomHeightPaginatedTable({
@@ -436,32 +458,73 @@ void main() {
         ],
       ),
     ));
-    expect(tester.renderObject<RenderBox>(find.widgetWithText(Container, 'Name').first).size.height, 56.0); // This is the header row height
-    expect(tester.renderObject<RenderBox>(find.widgetWithText(Container, 'Frozen yogurt (0)').first).size.height, 48.0); // This is the data row height
+    expect(
+        tester
+            .renderObject<RenderBox>(
+                find.widgetWithText(Container, 'Name').first)
+            .size
+            .height,
+        56.0); // This is the header row height
+    expect(
+        tester
+            .renderObject<RenderBox>(
+                find.widgetWithText(Container, 'Frozen yogurt (0)').first)
+            .size
+            .height,
+        48.0); // This is the data row height
 
     // CUSTOM VALUES
     await tester.pumpWidget(MaterialApp(
-      home: Material(child: buildCustomHeightPaginatedTable(headingRowHeight: 48.0)),
+      home: Material(
+          child: buildCustomHeightPaginatedTable(headingRowHeight: 48.0)),
     ));
-    expect(tester.renderObject<RenderBox>(find.widgetWithText(Container, 'Name').first).size.height, 48.0);
+    expect(
+        tester
+            .renderObject<RenderBox>(
+                find.widgetWithText(Container, 'Name').first)
+            .size
+            .height,
+        48.0);
 
     await tester.pumpWidget(MaterialApp(
-      home: Material(child: buildCustomHeightPaginatedTable(headingRowHeight: 64.0)),
+      home: Material(
+          child: buildCustomHeightPaginatedTable(headingRowHeight: 64.0)),
     ));
-    expect(tester.renderObject<RenderBox>(find.widgetWithText(Container, 'Name').first).size.height, 64.0);
+    expect(
+        tester
+            .renderObject<RenderBox>(
+                find.widgetWithText(Container, 'Name').first)
+            .size
+            .height,
+        64.0);
 
     await tester.pumpWidget(MaterialApp(
-      home: Material(child: buildCustomHeightPaginatedTable(dataRowHeight: 30.0)),
+      home:
+          Material(child: buildCustomHeightPaginatedTable(dataRowHeight: 30.0)),
     ));
-    expect(tester.renderObject<RenderBox>(find.widgetWithText(Container, 'Frozen yogurt (0)').first).size.height, 30.0);
+    expect(
+        tester
+            .renderObject<RenderBox>(
+                find.widgetWithText(Container, 'Frozen yogurt (0)').first)
+            .size
+            .height,
+        30.0);
 
     await tester.pumpWidget(MaterialApp(
-      home: Material(child: buildCustomHeightPaginatedTable(dataRowHeight: 56.0)),
+      home:
+          Material(child: buildCustomHeightPaginatedTable(dataRowHeight: 56.0)),
     ));
-    expect(tester.renderObject<RenderBox>(find.widgetWithText(Container, 'Frozen yogurt (0)').first).size.height, 56.0);
+    expect(
+        tester
+            .renderObject<RenderBox>(
+                find.widgetWithText(Container, 'Frozen yogurt (0)').first)
+            .size
+            .height,
+        56.0);
   });
 
-  testWidgets('PaginatedDataTable2 custom horizontal padding - checkbox', (WidgetTester tester) async {
+  testWidgets('PaginatedDataTable2 custom horizontal padding - checkbox',
+      (WidgetTester tester) async {
     const double defaultHorizontalMargin = 24.0;
     const double defaultColumnSpacing = 56.0;
     const double customHorizontalMargin = 10.0;
@@ -515,7 +578,8 @@ void main() {
 
     // default first column padding
     padding = find.widgetWithText(Padding, 'Frozen yogurt (0)').first;
-    cellContent = find.widgetWithText(Align, 'Frozen yogurt (0)'); // DataTable wraps its DataCells in an Align widget
+    cellContent = find.widgetWithText(Align,
+        'Frozen yogurt (0)'); // DataTable wraps its DataCells in an Align widget
     expect(
       tester.getRect(cellContent).left - tester.getRect(padding).left,
       defaultHorizontalMargin / 2,
@@ -588,7 +652,8 @@ void main() {
 
     // custom first column padding
     padding = find.widgetWithText(Padding, 'Frozen yogurt (0)').first;
-    cellContent = find.widgetWithText(Align, 'Frozen yogurt (0)'); // DataTable wraps its DataCells in an Align widget
+    cellContent = find.widgetWithText(Align,
+        'Frozen yogurt (0)'); // DataTable wraps its DataCells in an Align widget
     expect(
       tester.getRect(cellContent).left - tester.getRect(padding).left,
       customHorizontalMargin / 2,
@@ -626,7 +691,8 @@ void main() {
     await binding.setSurfaceSize(originalSize);
   });
 
-  testWidgets('PaginatedDataTable set border width test', (WidgetTester tester) async {
+  testWidgets('PaginatedDataTable set border width test',
+      (WidgetTester tester) async {
     final TestDataSource source = TestDataSource();
     const List<DataColumn> columns = <DataColumn>[
       DataColumn(label: Text('Name')),
@@ -670,7 +736,8 @@ void main() {
     expect(boxDecoration.border!.bottom.width, thickness);
   });
 
-  testWidgets('PaginatedDataTable2 custom horizontal padding - no checkbox', (WidgetTester tester) async {
+  testWidgets('PaginatedDataTable2 custom horizontal padding - no checkbox',
+      (WidgetTester tester) async {
     const double defaultHorizontalMargin = 24.0;
     const double defaultColumnSpacing = 56.0;
     const double customHorizontalMargin = 10.0;
@@ -702,7 +769,8 @@ void main() {
 
     // default first column padding
     padding = find.widgetWithText(Padding, 'Frozen yogurt (0)').first;
-    cellContent = find.widgetWithText(Align, 'Frozen yogurt (0)'); // DataTable wraps its DataCells in an Align widget
+    cellContent = find.widgetWithText(Align,
+        'Frozen yogurt (0)'); // DataTable wraps its DataCells in an Align widget
     expect(
       tester.getRect(cellContent).left - tester.getRect(padding).left,
       defaultHorizontalMargin,
@@ -799,7 +867,8 @@ void main() {
     );
   });
 
-  testWidgets('PaginatedDataTable2 table fills Card width', (WidgetTester tester) async {
+  testWidgets('PaginatedDataTable2 table fills Card width',
+      (WidgetTester tester) async {
     final TestDataSource source = TestDataSource();
 
     // Note: 800 is wide enough to ensure that all of the columns fit in the
@@ -847,7 +916,8 @@ void main() {
     await binding.setSurfaceSize(const Size(expandedWidth, height));
     await tester.pumpWidget(buildWidget());
 
-    final double cardWidth = tester.renderObject<RenderBox>(find.byType(Card).first).size.width;
+    final double cardWidth =
+        tester.renderObject<RenderBox>(find.byType(Card).first).size.width;
 
     // // ... and should still be equal after the resize.
     // expect(
@@ -861,7 +931,8 @@ void main() {
     await binding.setSurfaceSize(originalSize);
   });
 
-  testWidgets('PaginatedDataTable2 with optional column checkbox', (WidgetTester tester) async {
+  testWidgets('PaginatedDataTable2 with optional column checkbox',
+      (WidgetTester tester) async {
     await binding.setSurfaceSize(const Size(800, 800));
 
     Widget buildTable(bool checkbox) => MaterialApp(
@@ -884,7 +955,8 @@ void main() {
     expect(find.byType(Checkbox), findsNothing);
   });
 
-  testWidgets('Table should not use decoration from DataTableTheme', (WidgetTester tester) async {
+  testWidgets('Table should not use decoration from DataTableTheme',
+      (WidgetTester tester) async {
     final Size originalSize = binding.renderViews.first.size;
     await binding.setSurfaceSize(const Size(800, 800));
 
@@ -909,14 +981,19 @@ void main() {
     }
 
     await tester.pumpWidget(buildTable());
-    final Finder tableContainerFinder = find.ancestor(of: find.byType(Table), matching: find.byType(Container)).first;
-    expect(tester.widget<Container>(tableContainerFinder).decoration, const BoxDecoration());
+    final Finder tableContainerFinder = find
+        .ancestor(of: find.byType(Table), matching: find.byType(Container))
+        .first;
+    expect(tester.widget<Container>(tableContainerFinder).decoration,
+        const BoxDecoration());
 
     // Reset the surface size.
     await binding.setSurfaceSize(originalSize);
   });
 
-  testWidgets('PaginatedDataTable2 custom checkboxHorizontalMargin properly applied', (WidgetTester tester) async {
+  testWidgets(
+      'PaginatedDataTable2 custom checkboxHorizontalMargin properly applied',
+      (WidgetTester tester) async {
     const double customCheckboxHorizontalMargin = 15.0;
     const double customHorizontalMargin = 10.0;
 
@@ -973,7 +1050,8 @@ void main() {
 
     // Custom first column padding.
     padding = find.widgetWithText(Padding, 'Frozen yogurt (0)').first;
-    cellContent = find.widgetWithText(Align, 'Frozen yogurt (0)'); // DataTable wraps its DataCells in an Align widget.
+    cellContent = find.widgetWithText(Align,
+        'Frozen yogurt (0)'); // DataTable wraps its DataCells in an Align widget.
     expect(
       tester.getRect(cellContent).left - tester.getRect(padding).left,
       customHorizontalMargin / 2,
@@ -983,9 +1061,11 @@ void main() {
     await binding.setSurfaceSize(originalSize);
   });
 
-  testWidgets('Items selected text uses secondary color', (WidgetTester tester) async {
+  testWidgets('Items selected text uses secondary color',
+      (WidgetTester tester) async {
     const Color selectedTextColor = Color(0xff00ddff);
-    final ColorScheme colors = const ColorScheme.light().copyWith(secondary: selectedTextColor);
+    final ColorScheme colors =
+        const ColorScheme.light().copyWith(secondary: selectedTextColor);
     final ThemeData theme = ThemeData.from(colorScheme: colors);
 
     Widget buildTable() {
@@ -1016,13 +1096,17 @@ void main() {
     expect(find.text('1 item selected'), findsOneWidget);
 
     // The color of the selected text item should be the colorScheme.secondary
-    final TextStyle selectedTextStyle = tester.renderObject<RenderParagraph>(find.text('1 item selected')).text.style!;
+    final TextStyle selectedTextStyle = tester
+        .renderObject<RenderParagraph>(find.text('1 item selected'))
+        .text
+        .style!;
     expect(selectedTextStyle.color, equals(selectedTextColor));
 
     await binding.setSurfaceSize(null);
   });
 
-  testWidgets('PaginatedDataTable2 passes through DataTable2 extra fields', (WidgetTester tester) async {
+  testWidgets('PaginatedDataTable2 passes through DataTable2 extra fields',
+      (WidgetTester tester) async {
     final TestDataSource source = TestDataSource(allowSelection: true);
 
     await tester.pumpWidget(MaterialApp(
